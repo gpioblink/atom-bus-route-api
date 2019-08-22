@@ -4,7 +4,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node src/index.ts"
+    "dev": "node dist/index.ts",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
