@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node dist/index.ts",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "lint": "tslint --exclude **/*.d.ts --project . --fix 'src/**/*.ts' 'test/**/*.ts'"
   },
   "repository": {
     "type": "git",
