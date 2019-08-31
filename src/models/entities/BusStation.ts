@@ -1,9 +1,10 @@
 import * as md5 from 'md5';
+import Grid from '@/models/entities/Grid';
 
 export class BusStation {
   private _name: string;
   private _company: string;
-  private _grid: { lat: number; lng: number };
+  private _grid: Grid;
   private _nextBus: Set<BusStation>;
 
   get name(): string {
@@ -12,7 +13,7 @@ export class BusStation {
   get company(): string {
     return this.company;
   }
-  get grid(): { lat: number; lng: number } {
+  get grid(): Grid {
     return this.grid;
   }
 
@@ -24,7 +25,7 @@ export class BusStation {
     this._nextBus.add(nextBusStop);
   }
 
-  constructor(name: string, company: string, grid: { lat: number; lng: number }) {
+  constructor(name: string, company: string, grid: Grid) {
     this._name = name;
     this._company = company;
     this._grid = grid;
