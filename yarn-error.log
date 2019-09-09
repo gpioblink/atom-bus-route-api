@@ -1,0 +1,70 @@
+Arguments: 
+  /home/gpioblink/.nodebrew/node/v12.8.1/bin/node /usr/bin/yarn add typescript
+
+PATH: 
+  /home/gpioblink/.nodebrew/current/bin:/home/gpioblink/.nvm/versions/node/v11.12.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  12.8.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: EACCES: permission denied, unlink '/home/gpioblink/myjobs/atom/atom-bus-route-api/node_modules/ts-node/LICENSE'
+
+npm manifest: 
+  {
+    "name": "atom-bus-route-api",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node dist/index.js",
+      "dev": "nodemon -L",
+      "ts-node": "ts-node",
+      "tsc": "tsc",
+      "lint": "tslint --exclude **/*.d.ts --project . --fix 'src/**/*.ts' 'test/**/*.ts'"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/gpioblink/atom-bus-route-api.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/gpioblink/atom-bus-route-api/issues"
+    },
+    "homepage": "https://github.com/gpioblink/atom-bus-route-api#readme",
+    "description": "",
+    "dependencies": {
+      "@types/md5": "^2.1.33",
+      "@types/mysql": "^2.15.7",
+      "body-parser": "^1.19.0",
+      "express": "^4.17.1",
+      "md5": "^2.2.1",
+      "moment": "^2.24.0",
+      "promise-mysql": "^4.1.0"
+    },
+    "devDependencies": {
+      "@types/express": "^4.17.1",
+      "nodemon": "^1.19.1",
+      "prettier": "^1.18.2",
+      "ts-node": "^8.3.0",
+      "tslint": "^5.19.0",
+      "tslint-config-airbnb": "^5.11.1",
+      "tslint-config-prettier": "^1.18.0",
+      "tslint-plugin-prettier": "^2.0.1",
+      "typescript": "^3.5.3"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
