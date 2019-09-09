@@ -5,6 +5,6 @@ export default interface CommonOutput {
       errorCode: string;
       rq: string;
     };
-    body: [];
+    body: {};
   };
 }
