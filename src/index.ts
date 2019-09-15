@@ -17,7 +17,10 @@ app.get('/', (req, res) => res.send('Hello World! Please use /searchBusRoute'));
 
 app.post('/searchBusRoute', async (req, res) => {
   const query: SearchQuery = req.body;
-  res.send(await SearchByBizAPI.searchRoute(query));
+  console.log(req.body);
+  const result = await SearchByBizAPI.searchRoute(query);
+  console.log(result);
+  res.send(result);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
