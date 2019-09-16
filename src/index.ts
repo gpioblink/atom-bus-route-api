@@ -21,7 +21,7 @@ app.get('/', (req, res) => res.send('Hello World! Please use /searchBusRoute'));
 app.post('/searchBusRoute', async (req, res) => {
   const query: SearchQuery = req.body;
   console.log(req.body);
-  const result = await SearchByBizAPI.searchRoute(query);
+  const result = await SearchBusRouteBeyondTheCompany.searchRoute(query);
   console.log(result);
   res.send(result);
 });

@@ -73,7 +73,7 @@ export default class SearchByBizAPI {
 
     const stationList: string[] = [];
     for (const station of apiBody.eki) {
-      if (station.kubun == 'B') {
+      if (station.kubun === 'B') {
         // 区分が路線バスなら
         stationList.push(`${station.name}〔${station.company}〕`);
       }

@@ -10,7 +10,7 @@ export default class GeocodingAPI {
     const response = await axios.get(REQUEST_URL);
     const xmlResult = await xml2js.parseStringPromise(response.data);
 
-    if(!xmlResult.result || xmlResult.result.error) {
+    if (!xmlResult.result || xmlResult.result.error) {
       console.log(`no such location.`);
       return {};
     }
