@@ -16,9 +16,11 @@ export default class SearchByBizAPI {
     const result = await axios.get(REQUEST_URL);
     const apiResult = result.data as CommonOutput;
     const apiBody = apiResult.NorikaeBizApiResult.body as SearchRouteOutput;
+    console.log(apiBody.route[0]);
     return apiBody;
   }
 
-  // static searchTimeTable() { 
-  // }
+  static sanitizeResult(apiBody: SearchRouteOutput) {
+
+  }
 }
