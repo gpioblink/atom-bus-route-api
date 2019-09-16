@@ -7,8 +7,7 @@ import JorudanRouteFormat from '@/models/entities/jorudan/JorudanRouteFormat';
 import { Route } from '@/models/entities/Route';
 import Grid from '@/models/entities/Grid';
 import SearchLandmarkOutput from '@/models/entities/jorudan/SearchLandmarkOutput';
-import SearchStationNameOuput from '@/models/entities/jorudan/SearchStationNameOuput';
-import SearchStationNameOutput from '@/models/entities/jorudan/SearchStationNameOuput';
+import SearchStationNameOutput from '@/models/entities/jorudan/SearchStationNameOutput';
 
 export default class SearchByBizAPI {
   static async searchRoute(query: SearchQuery) {
@@ -56,7 +55,7 @@ export default class SearchByBizAPI {
     return grid;
   }
 
-  static async getNearestFullBusStationNameListByPlaceName(placeName: string) {
+  static async getFullBusStationNameListByPlaceName(placeName: string) {
     const BASEURI = process.env.JOLDAN_ENDPOINT;
     const API_KEY = process.env.JOLDAN_BIZ_API_KEY;
     const FUNC_NAME = 'sen.cgi';
@@ -102,7 +101,7 @@ export default class SearchByBizAPI {
 
     const stationList: string[] = [];
     for (const station of apiBody.eki) {
-      if (station.kubun == 'B') {
+      if (station.kubun === 'B') {
         // 区分が路線バスなら
         stationList.push(`${station.name}〔${station.company}〕`);
       }
