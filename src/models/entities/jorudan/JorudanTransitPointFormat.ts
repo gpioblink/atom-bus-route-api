@@ -1,6 +1,6 @@
 export default class JorudanTransitPointFormat {
   id: number;
-  rosen: number;
+  rosen: string;
   rosenSyubetu: number;
   from: string;
   fromExt: string;
