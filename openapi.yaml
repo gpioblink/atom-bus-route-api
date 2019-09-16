@@ -1,0 +1,101 @@
+openapi: "3.0.0"
+info:
+  description: "ATOM交通ハッカソンで使用する時刻検索のAPIの仕様書です。「路線バス・私鉄のみ」のルートを検索できます。"
+  version: "1.0.0"
+  title: "時刻表検索API 仕様書"
+  contact:
+    email: "gpioblink@gmail.com"
+
+servers:
+- url: https://atom-bus-search-api.serveo.net
+  description: 開発用
+- url: https://atom-bus-search-api-v1.serveo.net
+  description: 暫定版
+tags:
+- name: "路線バスルート検索"
+
+paths:
+  /searchBusRoute:
+    post:
+      tags:
+      - "路線バスルート検索"
+      summary: "出発地・目的地と日付から経路を検索します"
+      operationId: "searchBusRoute"
+      parameters: []
+      requestBody:
+        description: user to create
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                from:
+                  type: "string"
+                  description: "出発地のバス停です。ランドマークや住所が入力された場合は最寄りのバス停を取得して検索されます。"
+                to:
+                  type: "string"
+                  description: "到着地のバス停です。ランドマークや住所が入力された場合は最寄りのバス停を取得して検索されます。"
+                date:
+                  type: "string"
+                  description: "出発日です。平日・週末ダイヤや曜日限定ダイヤに対応するために利用されます。"
+            example:
+              from: 若松駅前
+              to: 郡山駅前
+              date: "20190918"
+              
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    price:
+                      type: "integer"
+                      description: "そのルート全体でかかる費用"
+                    time:
+                      type: "integer"
+                      description: "そのルート全体の所要時間(分)"
+                    distance:
+                      type: "integer"
+                      description: "そのルート全体の走行距離(100メートル単位)"
+                    flags:
+                      type: "object"
+                      properties:
+                        isFast:
+                          type: "boolean"
+                          description: "早く着くルートか"
+                        isCheap:
+                          type: "boolean"
+                          description: "安いルートか"
+                        isEasy:
+                          type: "boolean"
+                          description: "乗り換えが楽なルートか"
+                    path:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          routeName:
+                            type: "string"
+                            example: "経路1の路線名〔運行バス会社名〕"
+                          from:
+                            type: "string"
+                            example: "経路1の乗車停留所名"
+                          to:
+                            type: "string"
+                            example: "経路1の降車停留所名"
+                          distance:
+                            type: "integer"
+                            example: 24
+                            description: "走行距離(100メートル単位)"
+                          "time":
+                            type: "integer"
+                            example: 5
+                            description: "所要時間(分)"
+                          routeColorRGB:
+                            example: "a9a9a9"
+                            description: "そのバス路線のテーマカラー(RGB)、ただしバスの場合は常に固定な気がする"
