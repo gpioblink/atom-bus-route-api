@@ -25,12 +25,44 @@ app.post('/searchBusRoute', async (req, res) => {
   res.send(result);
 });
 
-app.get('/findPlaceGrid', async (req, res) => {
+app.get('/test/findPlaceGrid', async (req, res) => {
   let name = '';
   if (req.query.name) {
     name = req.query.name;
   }
   const result = await GeocodingAPI.getDEGWorldGridFromPlaceName(name);
+  res.send(result);
+});
+
+app.get('/test/findPlaceGridJorudan', async (req, res) => {
+  let name = '';
+  if (req.query.name) {
+    name = req.query.name;
+  }
+  const result = await SearchByBizAPI.getDEGWorldGridFromPlaceName(name);
+  res.send(result);
+});
+
+app.get('/test/getStationList', async (req, res) => {
+  let name = '';
+  if (req.query.name) {
+    name = req.query.name;
+  }
+  const result = await SearchByBizAPI.getNearestFullBusStationNameListByPlaceName(name);
+  res.send(result);
+});
+
+app.get('/test/getStationListGrid', async (req, res) => {
+  let lat = 0;
+  if (req.query.lat) {
+    lat = req.query.lat;
+  }
+  let lng = 0;
+  if (req.query.lng) {
+    lng = req.query.lng;
+  }
+
+  const result = await SearchByBizAPI.getNearestFullBusStationNameListByGrid({ lat: lat, lng: lng });
   res.send(result);
 });
 
