@@ -2,3 +2,4 @@ node_modules/
 dist/
 docker/db/data/node_modules/
 .Trash-1000/
+dist/
