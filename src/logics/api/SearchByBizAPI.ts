@@ -88,7 +88,7 @@ export default class SearchByBizAPI {
     const API_KEY = process.env.JOLDAN_BIZ_API_KEY;
     const FUNC_NAME = 'sne.cgi';
 
-    const REQUEST_URL = `${BASEURI}/${FUNC_NAME}?f=1&ak=${API_KEY}&opt1=${grid.lng}&opt2=${grid.lat}&opt3=999999&opt4=1&opt5=3&max=10`;
+    const REQUEST_URL = `${BASEURI}/${FUNC_NAME}?f=1&ak=${API_KEY}&opt1=${grid.lng}&opt2=${grid.lat}&opt3=99999999&opt4=1&opt5=3&max=10`;
     console.log(`GET: ${REQUEST_URL}`);
 
     const result = await axios.get(REQUEST_URL);
