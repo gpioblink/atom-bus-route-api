@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 import SearchByBizAPI from '@/logics/api/SearchByBizAPI';
 import GeocodingAPI from '@/logics/api/GeocodingAPI';
 import SearchBusRouteBeyondTheCompany from './logics/api/SearchBusRouteBeyondTheCompany';
+import SearchQueryGridFrom from './models/entities/SearchQueryGridFrom';
 
 const app = express();
 const port = 3000;
@@ -26,8 +27,18 @@ app.get('/', (req, res) => res.send('Hello World! Please use /searchBusRoute'));
 
 app.post('/searchBusRoute', async (req, res) => {
   const query: SearchQuery = req.body;
+  if (!query.useDateAs) query.useDateAs = 3;
   console.log(req.body);
   const result = await SearchBusRouteBeyondTheCompany.searchRoute(query);
+  console.log(result);
+  res.send(result);
+});
+
+app.post('/searchBusRouteGridFrom', async (req, res) => {
+  const query: SearchQueryGridFrom = req.body;
+  if (!query.useDateAs) query.useDateAs = 1;
+  console.log(req.body);
+  const result = await SearchBusRouteBeyondTheCompany.searchRouteFromGrid(query);
   console.log(result);
   res.send(result);
 });

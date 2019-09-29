@@ -1,5 +1,5 @@
 import SearchQuery from '@/models/entities/SearchQuery';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 import axios from 'axios';
 import CommonOutput from '@/models/entities/jorudan/CommonOutput';
 import SearchRouteOutput from '@/models/entities/jorudan/SearchRouteOutput';
@@ -11,13 +11,17 @@ import SearchStationNameOutput from '@/models/entities/jorudan/SearchStationName
 
 export default class SearchByBizAPI {
   static async searchRoute(query: SearchQuery) {
+    moment.tz.setDefault('Asia/Tokyo');
+
     const BASEURI = process.env.JOLDAN_ENDPOINT;
     const API_KEY = process.env.JOLDAN_BIZ_API_KEY;
     const FUNC_NAME = 'sr.cgi';
 
     const REQUEST_URL = `${BASEURI}/${FUNC_NAME}?f=1&ak=${API_KEY}&eki1=${encodeURI(query.from)}&eki2=${encodeURI(
       query.to
-    )}&kbn1=B&kbn2=B&opt3=3&opt4=1&rm=TasyaBus=On&date=${encodeURI(moment(query.date).format('YYYYMMDD'))}`;
+    )}&kbn1=B&kbn2=B&opt3=${query.useDateAs}&opt4=1&rm=TasyaBus=On&date=${encodeURI(
+      moment(Number(query.date)*1000).format('YYYYMMDD')
+    )}&time=${encodeURI(moment(Number(query.date)*1000).format('hhmm'))}`;
     console.log(`GET: ${REQUEST_URL}`);
 
     const result = await axios.get(REQUEST_URL);
@@ -73,9 +77,10 @@ export default class SearchByBizAPI {
 
     const stationList: string[] = [];
     for (const station of apiBody.eki) {
-      if (station.kubun === 'B') {
+      if (station.kubun === 'B' && stationList.length < 4) {
         // 区分が路線バスなら
-        stationList.push(`${station.name}〔${station.company}〕`);
+        stationList.push(`${station.name}`); // なぜか急に社名もでるようになった
+        // stationList.push(`${station.name}〔${station.company}〕`);
       }
     }
 
@@ -101,7 +106,7 @@ export default class SearchByBizAPI {
 
     const stationList: string[] = [];
     for (const station of apiBody.eki) {
-      if (station.kubun === 'B') {
+      if (station.kubun === 'B' && stationList.length < 4) {
         // 区分が路線バスなら
         stationList.push(`${station.name}〔${station.company}〕`);
       }

@@ -35,10 +35,10 @@ export default class JorudanTransitPointFormat {
   icTokkyuGreen: number;
   icTokkyuTuusan: number;
   airLine: number;
-  fromDate: number;
+  fromDate: string;
   fromTime: string;
   fromTimeType: number;
-  toDate: number;
+  toDate: string;
   toTime: string;
   toTimeType: number;
   lineName: string;

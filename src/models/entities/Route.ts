@@ -9,8 +9,11 @@ export class Route {
   distance: number; // 距離
   flags: flagType; // 早・安・楽
   path: TransferPoint[];
+  id: number;
+  transitPoints: number; // 乗り換え回数
 
   constructor(jorudanRoute: JorudanRouteFormat) {
+    this.id = jorudanRoute.id;
     this.price = jorudanRoute.hyouka.hiyou;
     this.time = jorudanRoute.hyouka.jikan;
     this.distance = jorudanRoute.hyouka.kyori;
@@ -19,6 +22,7 @@ export class Route {
       isCheap: Boolean(Number(jorudanRoute.hyouka.status.yasui)),
       isEasy: Boolean(Number(jorudanRoute.hyouka.status.raku))
     };
+    this.transitPoints = jorudanRoute.hyouka.norikaeCnt;
 
     this.path = [];
     for (const path of jorudanRoute.path) {
