@@ -44,6 +44,8 @@ app.post('/searchBusRouteGridFrom', async (req, res) => {
 });
 
 app.get('/test/findPlaceGrid', async (req, res) => {
+  // この処理隠蔽できそう
+  // const name = getNameByRequest(req)
   let name = '';
   if (req.query.name) {
     name = req.query.name;

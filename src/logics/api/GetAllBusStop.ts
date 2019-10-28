@@ -1,5 +1,3 @@
 export class GetAllBusStop {
-  static getBusStops() {
-    
-  }
+  static getBusStops() {}
 }

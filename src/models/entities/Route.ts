@@ -2,12 +2,12 @@ import { TransferPoint } from '@/models/entities/TransferPoint';
 import JorudanRouteFormat from '@/models/entities/jorudan/JorudanRouteFormat';
 
 type flagType = { isFast: boolean; isCheap: boolean; isEasy: boolean };
-
+// 単語でわかるものはコメントいらない&わかる単語の選択を心がける
 export class Route {
   price: number; // 費用
   time: number; // 所要時間
   distance: number; // 距離
-  flags: flagType; // 早・安・楽
+  flags: flagType; // 早・安・楽　このコメントは大元の定義の方にあったほうがいいかも
   path: TransferPoint[];
   id: number;
   transitPoints: number; // 乗り換え回数

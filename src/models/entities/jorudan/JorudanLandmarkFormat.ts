@@ -1,5 +1,5 @@
 export default class JorudanLandmarkFormat {
-    name: string;
-    x: string;
-    y: string;
+  name: string;
+  x: string;
+  y: string;
 }

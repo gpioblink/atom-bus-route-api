@@ -6,11 +6,21 @@ import { Route } from '@/models/entities/Route';
 import ApiResultError from '@/models/entities/ApiResultError';
 import SearchQueryGridFrom from '@/models/entities/SearchQueryGridFrom';
 
+// apiというディレクトリの中にいるが実質このclassが他のapiを叩いているように見える
+// 外部の物を叩く場合は特にそうだけど、階層と抽象度を揃えたほうがいいと思う
+// でないと、こんな感じでアプリケーション固有のロジックと外部のapiとの接続が絡み合って複雑化してしまうし、
+// テスト不可能になってしまい、本当にテストを最優先でしなければいけない固有ロジックを見失いがち,
+// 
+// ガード節を意識した、早期リターンをしているのはとてもいいと思う
+// あとは処理のまとまりを意識して空行を入れていけるともっといいと思う！
+
 export default class SearchBusRouteBeyondTheCompany {
   static async searchRoute(query: SearchQuery) {
     const fullFromList = await SearchBusRouteBeyondTheCompany.findFullStationNameList(query.from);
+    // if文の書式を統一したほうがいいので、個人的には{}をつけたほうが好み
     if ((fullFromList as ApiResultError).error) return fullFromList;
     const fullToList = await SearchBusRouteBeyondTheCompany.findFullStationNameList(query.to);
+    
     if ((fullToList as ApiResultError).error) return fullToList;
     const result = await SearchBusRouteBeyondTheCompany.execBulkRouteSearch(
       fullFromList as string[],
@@ -40,12 +50,12 @@ export default class SearchBusRouteBeyondTheCompany {
 
   static async execBulkRouteSearch(fromList: string[], toList: string[], originalQuery: SearchQuery) {
     let routeList: Route[] = [];
+  // ここはmapとかforEachとかで置き換えれそう
     for (const from of fromList) {
       for (const to of toList) {
         const query = originalQuery;
         query.from = from;
         query.to = to;
-        console.log(query);
 
         const result = await SearchByBizAPI.searchRoute(query);
         for (const route of result) {
@@ -65,7 +75,6 @@ export default class SearchBusRouteBeyondTheCompany {
       routeList.push(routeObj[key]);
     }
 
-    console.log(`total ${routeList.length} results found`);
     return routeList;
   }
 

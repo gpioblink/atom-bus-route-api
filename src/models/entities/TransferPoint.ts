@@ -1,7 +1,7 @@
-import * as md5 from 'md5';
-import Grid from '@/models/entities/Grid';
+import * as md5 from 'md5';　// 使ってない？
+import Grid from '@/models/entities/Grid'; // 使ってない？
 import JorudanTransitPointFormat from '@/models/entities/jorudan/JorudanTransitPointFormat';
-import * as moment from 'moment-timezone';
+import * as moment from 'moment-timezone';//typescriptの型ファイルがない
 
 export class TransferPoint {
   static readonly methodTable = [
@@ -59,13 +59,26 @@ export class TransferPoint {
     this.price = jorudanTransitPoint.untin;
 
     // console.log(`${jorudanTransitPoint.fromDate} ${jorudanTransitPoint.fromTime}`);
-    this.fromDate = String(moment(
-      `${jorudanTransitPoint.fromDate}/${Number(jorudanTransitPoint.fromTime).toString().padStart(4, '0')}`,
-      'YYYYMMDD/hhmm',
-      true
-    ).unix());
+    // fromDateもtoDateも同様の処理をしているように見えるし、同じように時間を出したいみたいなので、別関数に切り出して使ったほうが意味合いもわかってよさそう
+    this.fromDate = String(
+      moment(
+        `${jorudanTransitPoint.fromDate}/${Number(jorudanTransitPoint.fromTime)
+          .toString()
+          .padStart(4, '0')}`,
+        'YYYYMMDD/hhmm',
+        true
+      ).unix()
+    );
 
-    this.toDate = String(moment(`${jorudanTransitPoint.toDate} ${Number(jorudanTransitPoint.toTime).toString().padStart(4, '0')}`, 'YYYYMMDD hhmm', true).unix());
+    this.toDate = String(
+      moment(
+        `${jorudanTransitPoint.toDate} ${Number(jorudanTransitPoint.toTime)
+          .toString()
+          .padStart(4, '0')}`,
+        'YYYYMMDD hhmm',
+        true
+      ).unix()
+    );
 
     this.routeColorRGB = jorudanTransitPoint.lineColor.rgb[0];
   }

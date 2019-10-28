@@ -3,7 +3,7 @@ import * as moment from 'moment-timezone';
 import axios from 'axios';
 import CommonOutput from '@/models/entities/jorudan/CommonOutput';
 import SearchRouteOutput from '@/models/entities/jorudan/SearchRouteOutput';
-import JorudanRouteFormat from '@/models/entities/jorudan/JorudanRouteFormat';
+import JorudanRouteFormat from '@/models/entities/jorudan/JorudanRouteFormat'; // 使ってない？
 import { Route } from '@/models/entities/Route';
 import Grid from '@/models/entities/Grid';
 import SearchLandmarkOutput from '@/models/entities/jorudan/SearchLandmarkOutput';
@@ -11,27 +11,31 @@ import SearchStationNameOutput from '@/models/entities/jorudan/SearchStationName
 
 export default class SearchByBizAPI {
   static async searchRoute(query: SearchQuery) {
+    // タイムゾーン指定とかはアプリケーション起動時にやっておいたほうが安全
     moment.tz.setDefault('Asia/Tokyo');
 
+    // 以下でクライアントの生成ロジックが含まれているし、各apiクライアント用のclassで生成しているので、同じエンドポイントは一箇所で生成して、決められたルールを与えられたほうがいいので
+    // axiosのclientを作成してそれを使ったほうがよさそう(axios.create)
+    // そして、そうしておくと簡単にクライアントをテスト用と本番用を変更できたりする
     const BASEURI = process.env.JOLDAN_ENDPOINT;
     const API_KEY = process.env.JOLDAN_BIZ_API_KEY;
     const FUNC_NAME = 'sr.cgi';
 
+    // このリクエスト生成は別関数で隠蔽し他方がよさそう
     const REQUEST_URL = `${BASEURI}/${FUNC_NAME}?f=1&ak=${API_KEY}&eki1=${encodeURI(query.from)}&eki2=${encodeURI(
       query.to
     )}&kbn1=B&kbn2=B&opt3=${query.useDateAs}&opt4=1&rm=TasyaBus=On&date=${encodeURI(
       moment(Number(query.date)*1000).format('YYYYMMDD')
     )}&time=${encodeURI(moment(Number(query.date)*1000).format('hhmm'))}`;
-    console.log(`GET: ${REQUEST_URL}`);
 
     const result = await axios.get(REQUEST_URL);
+    // SearchRouteOutputを返すまでの一連の流れを関数で分けて隠蔽したほうが良い 
     const apiResult = result.data as CommonOutput;
     const apiBody = apiResult.NorikaeBizApiResult.body as SearchRouteOutput;
     if (!apiBody.num) {
-      console.log(`no results was found.`);
       return [];
     }
-    console.log(`${apiBody.num} result(s) was found.`);
+
     return SearchByBizAPI.sanitizeResult(apiBody);
   }
 
@@ -129,3 +133,4 @@ export default class SearchByBizAPI {
     return routes;
   }
 }
+
